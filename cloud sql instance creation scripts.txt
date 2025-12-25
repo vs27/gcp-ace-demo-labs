@@ -1,0 +1,50 @@
+admin.googleapis.com
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud sql instances create ace-demo-sql \
+  --database-version=POSTGRES_15 \
+  --tier=db-f1-micro \
+Welcome to Cloud Shell! Type "help" to get started, or type "gemini" to try prompting with Gemini CLI.
+Your Cloud Platform project in this session is set to scientific-base-455800-c6.
+Use `gcloud config set project [PROJECT_ID]` to change to a different project.
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud services enable sqladmin.googleapis.com
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud sql instances create ace-demo-sql \
+  --database-version=POSTGRES_15 \
+  --tier=db-f1-micro \
+  --region=asia-south1 \
+  --storage-size=10GB \
+  --backup-start-time=02:00
+Creating Cloud SQL instance for POSTGRES_15...done.                                                                                                                                                                
+Created [https://sqladmin.googleapis.com/sql/v1beta4/projects/scientific-base-455800-c6/instances/ace-demo-sql].
+NAME: ace-demo-sql
+DATABASE_VERSION: POSTGRES_15
+LOCATION: asia-south1-b
+TIER: db-f1-micro
+PRIMARY_ADDRESS: 34.93.16.67
+PRIVATE_ADDRESS: -
+STATUS: RUNNABLE
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud sql databases create ace_demo_db --instance=ace-demo-sql
+Creating Cloud SQL database...done.                                                                                                                                                                                
+Created database [ace_demo_db].
+instance: ace-demo-sql
+name: ace_demo_db
+project: scientific-base-455800-c6
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud sql users create demo_user --instance=ace-demo-sql --password="Demo@1234"
+Creating Cloud SQL user...done.                                                                                                                                                                                    
+Created user [demo_user].
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud sql connect ace-demo-sql --user=demo_user --database=ace_demo_db
+Allowlisting your IP for incoming connection for 5 minutes...done.                                                                                                                                                 
+Connecting to database with SQL user [demo_user].Password: 
+psql: error: connection to server at "34.93.16.67", port 5432 failed: FATAL:  password authentication failed for user "demo_user"
+connection to server at "34.93.16.67", port 5432 failed: FATAL:  password authentication failed for user "demo_user"
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud sql connect ace-demo-sql --user=demo_user --database=ace_demo_db
+Allowlisting your IP for incoming connection for 5 minutes...done.                                                                                                                                                 
+Connecting to database with SQL user [demo_user].Password: 
+psql (16.11 (Ubuntu 16.11-1.pgdg24.04+1), server 15.15)
+SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
+Type "help" for help.
+
+ace_demo_db=> Select version
+ace_demo_db-> ^C
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud sql instances delete ace-demo-sql --quiet
+Deleting Cloud SQL instance...done.                                                                                                                                                                                
+Deleted [https://sqladmin.googleapis.com/sql/v1beta4/projects/scientific-base-455800-c6/instances/ace-demo-sql].
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ 
