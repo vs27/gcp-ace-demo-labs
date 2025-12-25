@@ -1,0 +1,197 @@
+Welcome to Cloud Shell! Type "help" to get started, or type "gemini" to try prompting with Gemini CLI.
+Your Cloud Platform project in this session is set to scientific-base-455800-c6.
+Use `gcloud config set project [PROJECT_ID]` to change to a different project.
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud compute instances create ace-demo-vm \
+  --zone=asia-south1-a \
+  --machine-type=e2-micro \
+  --image-family=ubuntu-2204-lts \
+  --image-project=ubuntu-os-cloud
+Created [https://www.googleapis.com/compute/v1/projects/scientific-base-455800-c6/zones/asia-south1-a/instances/ace-demo-vm].
+NAME: ace-demo-vm
+ZONE: asia-south1-a
+MACHINE_TYPE: e2-micro
+PREEMPTIBLE: 
+INTERNAL_IP: 10.160.0.2
+EXTERNAL_IP: 34.14.215.12
+STATUS: RUNNING
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud compute firewall-rules create allow-ssh-ace-demo --allow=tcp:22 --network=default --direction=INGRESS --priority=1000 --source-ranges=0.0.0.0/0
+Creating firewall...working..Created [https://www.googleapis.com/compute/v1/projects/scientific-base-455800-c6/global/firewalls/allow-ssh-ace-demo].                                                               
+Creating firewall...done.                                                                                                                                                                                          
+NAME: allow-ssh-ace-demo
+NETWORK: default
+DIRECTION: INGRESS
+PRIORITY: 1000
+ALLOW: tcp:22
+DENY: 
+DISABLED: False
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud compute ssh ace-demo-vm --zone=asia-south1-a
+WARNING: The private SSH key file for gcloud does not exist.
+WARNING: The public SSH key file for gcloud does not exist.
+WARNING: You do not have an SSH key for gcloud.
+WARNING: SSH keygen will be executed to generate a key.
+This tool needs to create the directory [/home/shylajaiyer/.ssh] before being able to generate SSH keys.
+
+Do you want to continue (Y/n)?  Y
+
+Generating public/private rsa key pair.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/shylajaiyer/.ssh/google_compute_engine
+Your public key has been saved in /home/shylajaiyer/.ssh/google_compute_engine.pub
+The key fingerprint is:
+SHA256:BkW+m69YjvWKtKbUxWha8mCcxln6yAT+EDfO26nRxoo shylajaiyer@cs-592867500454-default
+The key's randomart image is:
++---[RSA 3072]----+
+|       .o        |
+|       o         |
+|  o o o .        |
+| . O * + .       |
+|  o # + S        |
+|   B / + o       |
+|    O @ =        |
+|   o *.O o       |
+|  E +o= +oo      |
++----[SHA256]-----+
+Updating project ssh metadata...workingUpdated [https://www.googleapis.com/compute/v1/projects/scientific-base-455800-c6].                                                                                         
+Updating project ssh metadata...done.                                                                                                                                                                              
+Waiting for SSH key to propagate.
+Warning: Permanently added 'compute.7318476876486324399' (ED25519) to the list of known hosts.
+Welcome to Ubuntu 22.04.5 LTS (GNU/Linux 6.8.0-1045-gcp x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Thu Dec 25 10:18:03 UTC 2025
+
+  System load:  0.02              Processes:             109
+  Usage of /:   22.8% of 9.51GB   Users logged in:       0
+  Memory usage: 24%               IPv4 address for ens4: 10.160.0.2
+  Swap usage:   0%
+
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+shylajaiyer@ace-demo-vm:~$ sudo apt update
+Hit:1 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy InRelease
+Get:2 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
+Get:3 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+Get:4 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
+Get:5 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [14.1 MB]
+Get:6 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
+Get:7 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]                
+Get:8 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]                    
+Get:9 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
+Get:10 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
+Get:11 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [3161 kB]
+Get:12 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [484 kB]
+Get:13 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [5043 kB]
+Get:14 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 Packages [1007 kB]
+Get:15 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1244 kB]
+Get:16 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [310 kB]
+Get:17 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [30.0 kB]
+Get:18 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [57.6 kB]
+Get:19 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [13.2 kB]
+Get:20 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [600 B]
+Get:21 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [69.4 kB]
+Get:22 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.5 kB]
+Get:23 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [412 B]
+Get:24 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 c-n-f Metadata [116 B]
+Get:25 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [31.7 kB]
+Get:26 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.9 kB]
+Get:27 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [672 B]
+Get:28 http://asia-south1.gce.archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 c-n-f Metadata [116 B]
+Get:29 http://security.ubuntu.com/ubuntu jammy-security/universe Translation-en [221 kB]        
+Get:30 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Metadata [22.3 kB]
+Get:31 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [50.5 kB]
+Get:32 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [10.2 kB]
+Get:33 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [376 B]
+Fetched 32.5 MB in 7s (4574 kB/s)                                                                                                                                                                                  
+Reading package lists... Done
+Building dependency tree... Done
+Reading state information... Done
+All packages are up to date.
+shylajaiyer@ace-demo-vm:~$ sudo apt install htop -v
+apt 2.4.14 (amd64)
+shylajaiyer@ace-demo-vm:~$ htop -v
+htop: invalid option -- 'v'
+shylajaiyer@ace-demo-vm:~$ htop --version
+htop 3.0.5
+shylajaiyer@ace-demo-vm:~$ exit
+logout
+Connection to 34.14.215.12 closed.
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud compute instances delete ace-demo-vm --zone=asia-south1-a
+The following instances will be deleted. Any attached disks configured to be auto-deleted will be deleted unless they are attached to any other instances or the `--keep-disks` flag is given and specifies them for
+ keeping. Deleting a disk is irreversible and any data on the disk will be lost.
+ - [ace-demo-vm] in [asia-south1-a]
+
+Do you want to continue (Y/n)?  Y
+
+Deleted [https://www.googleapis.com/compute/v1/projects/scientific-base-455800-c6/zones/asia-south1-a/instances/ace-demo-vm].
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud compute firewall-rules allow-ssh-ace-demo --quiet
+ERROR: (gcloud.compute.firewall-rules) Invalid choice: 'allow-ssh-ace-demo'.
+Maybe you meant:
+  gcloud compute
+
+To search the help text of gcloud commands, run:
+  gcloud help -- SEARCH_TERMS
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ 
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ ^C
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud compute firewall-rules list
+NAME: allow-ssh-ace-demo
+NETWORK: default
+DIRECTION: INGRESS
+PRIORITY: 1000
+ALLOW: tcp:22
+DENY: 
+DISABLED: False
+
+NAME: default-allow-icmp
+NETWORK: default
+DIRECTION: INGRESS
+PRIORITY: 65534
+ALLOW: icmp
+DENY: 
+DISABLED: False
+
+NAME: default-allow-internal
+NETWORK: default
+DIRECTION: INGRESS
+PRIORITY: 65534
+ALLOW: tcp:0-65535,udp:0-65535,icmp
+DENY: 
+DISABLED: False
+
+NAME: default-allow-rdp
+NETWORK: default
+DIRECTION: INGRESS
+PRIORITY: 65534
+ALLOW: tcp:3389
+DENY: 
+DISABLED: False
+
+NAME: default-allow-ssh
+NETWORK: default
+DIRECTION: INGRESS
+PRIORITY: 65534
+ALLOW: tcp:22
+DENY: 
+DISABLED: False
+
+To show all fields of the firewall, please show in JSON format: --format=json
+To show all fields in table format, please see the examples in --help.
+
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ ^C
+shylajaiyer@cloudshell:~ (scientific-base-455800-c6)$ gcloud compute firewall-rules delete  allow-ssh-ace-demo
+The following firewalls will be deleted:
+ - [allow-ssh-ace-demo]
+
+Do you want to continue (Y/n)?  Y
+
+Deleted [https://www.googleapis.com/compute/v1/projects/scientific-base-455800-c6/global/firewalls/allow-ssh-ace-demo].
