@@ -1,7 +1,7 @@
 {
   "type": "service_account",
   "project_id": "glowing-sanctum-482200-f5",
-  "private_key_id": "623cf1be8a9dabfee3d9e4522071c2dcf2bb3ccf",
+  "private_key_id": "6***********f",
   "private_key": "-----BEGIN PRIVATE KEY-----",
   "client_email": "demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com",
   "client_id": "116367451684258895288",
