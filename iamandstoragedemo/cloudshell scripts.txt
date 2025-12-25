@@ -1,0 +1,64 @@
+- members:
+  - serviceAccount:service-179650429490@compute-system.iam.gserviceaccount.com
+  role: roles/compute.serviceAgent
+- members:
+  - serviceAccount:service-179650429490@containerregistry.iam.gserviceaccount.com
+  role: roles/containerregistry.ServiceAgent
+- members:
+  - deleted:serviceAccount:179650429490-compute@developer.gserviceaccount.com?uid=102077642612548608127
+  - serviceAccount:179650429490@cloudservices.gserviceaccount.com
+  role: roles/editor
+- members:
+  - user:shylajaiyer@gmail.com
+  role: roles/owner
+- members:
+  - serviceAccount:service-179650429490@gcp-sa-pubsub.iam.gserviceaccount.com
+  role: roles/pubsub.serviceAgent
+- members:
+  - serviceAccount:service-179650429490@serverless-robot-prod.iam.gserviceaccount.com
+  role: roles/run.serviceAgent
+- members:
+  - serviceAccount:demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com
+  role: roles/storage.objectCreator
+- members:
+  - serviceAccount:demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com
+  role: roles/storage.objectViewer
+etag: BwZGwtfhdjU=
+version: 1
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ echo "Storage DEMO" > demofile.txt
+gcloud storage cp demofile.txt gs://demo-bucket-vs27/demofile.txt
+Copying file://demofile.txt to gs://demo-bucket-vs27/demofile.txt
+  Completed files 1/1 | 13.0B/13.0B                                                                                                                                                                                
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ gcloud storage cp gs://demo-bucket-vs27/demofile.txt ./demofile.txt
+Copying gs://demo-bucket-vs27/demofile.txt to file://./demofile.txt
+  Completed files 1/1 | 13.0B/13.0B                                                                                                                                                                                
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ gcloud storage ls gs://demo-bucket-vs7
+ERROR: (gcloud.storage.ls) gs://demo-bucket-vs7 not found: 404.
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ gcloud storage ls gs://demo-bucket-vs27
+gs://demo-bucket-vs27/demofile.txt
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ gcloud iam service-accounts delete ace-demo-sa@glowing-sanctum-482200-f5.iam.gserviceaccount.com --quiet
+gcloud storage buckets delete gs://ace-demo-bucket-* --quiet
+rm demofile.txt demofile.txt downloaded-demofile.txt demofile.txt demofile.txt demofile.txt downloaded-demofile.txt 2>/dev/null                                                                  
+ERROR: (gcloud.iam.service-accounts.delete) NOT_FOUND: Unknown service account. This command is authenticated as shylajaiyer@gmail.com which is the active account specified by the [core/account] property
+  Completed 0                                                                                                                                                                                   
+ERROR: (gcloud.storage.buckets.delete) The following URLs matched no objects or files:
+gs://ace-demo-bucket-*
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ gcloud auth activate-service-account demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com --key-file glowing-sanctum-482200-f5-623cf1be8a9d.json
+Activated service account credentials for: [demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com]
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ gcloud storage buckets delete gs://ace-demo-bucket-* --quiet                                                                               
+  Completed 0                                                                                                                                                                                   
+ERROR: (gcloud.storage.buckets.delete) HTTPError 403: demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com does not have storage.buckets.list access to the Google Cloud project. Permission 'storage.buckets.list' denied on resource (or it may not exist). This command is authenticated as demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com which is the active account specified by the [core/account] property.
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ rm demofile.txt demofile.txt downloaded-demofile.txt demofile.txt demofile.txt demofile.txt downloaded-demofile.txt 2>/dev/null            
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ gcloud storage buckets delete gs://ace-demo-bucket-* --quiet                                                                               
+  Completed 0                                                                                                                                                                                   
+ERROR: (gcloud.storage.buckets.delete) HTTPError 403: demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com does not have storage.buckets.list access to the Google Cloud project. Permission 'storage.buckets.list' denied on resource (or it may not exist). This command is authenticated as demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com which is the active account specified by the [core/account] property.
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ gcloud iam service-accounts delete ace-demo-sa@glowing-sanctum-482200-f5.iam.gserviceaccount.com --quiet                                   
+ERROR: (gcloud.iam.service-accounts.delete) NOT_FOUND: Unknown service account. This command is authenticated as demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com which is the active account specified by the [core/account] property
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ gcloud iam service-accounts delete demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com --quiet                                   
+ERROR: (gcloud.iam.service-accounts.delete) PERMISSION_DENIED: Permission 'iam.serviceAccounts.delete' denied on resource (or it may not exist). This command is authenticated as demo-sa-acc@glowing-sanctum-482200-f5.iam.gserviceaccount.com which is the active account specified by the [core/account] property.
+- '@type': type.googleapis.com/google.rpc.ErrorInfo
+  domain: iam.googleapis.com
+  metadata:
+    permission: iam.serviceAccounts.delete
+  reason: IAM_PERMISSION_DENIED
+shylajaiyer@cloudshell:~ (glowing-sanctum-482200-f5)$ 
